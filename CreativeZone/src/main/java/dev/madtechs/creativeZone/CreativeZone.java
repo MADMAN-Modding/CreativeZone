@@ -1,8 +1,10 @@
 package dev.madtechs.creativeZone;
 
-import dev.madtechs.creativeZone.commands.ZoneCommand;
+import dev.madtechs.creativeZone.commands.CreateZone;
+import dev.madtechs.creativeZone.commands.GoToOverworld;
+import dev.madtechs.creativeZone.commands.PullChunks;
+
 import org.bukkit.*;
-import org.bukkit.command.PluginCommand;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -15,9 +17,10 @@ public class CreativeZone extends JavaPlugin implements Listener {
 
         instance = this;
 
-        PluginCommand zoneCommand = getCommand("makeZone");
+        getCommand("makeZone").setExecutor(new CreateZone());
+        getCommand("goToOverworld").setExecutor(new GoToOverworld());
+        getCommand("pullChunks").setExecutor(new PullChunks());
 
-        zoneCommand.setExecutor(new ZoneCommand());
     }
 
     public static CreativeZone getInstance() {

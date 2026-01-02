@@ -8,5 +8,11 @@ api-version: '1.21.11'
 
 commands:
   makeZone:
-    description: Manage horse actions like spawn and despawn
+    description: Make a new zone with X chunks in each direction (squares)
     usage: /<command> <chunks>
+  pullChunks:
+    description: Pull chunks from the overworld
+    usage: /<command> <chunks>
+  goToOverworld:
+    description: Go back to the overworld
+    usage: /<command>

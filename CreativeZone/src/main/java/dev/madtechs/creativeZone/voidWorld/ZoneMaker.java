@@ -17,8 +17,8 @@ public class ZoneMaker {
         int playerChunkX = playerLocation.getChunk().getX();
         int playerChunkZ = playerLocation.getChunk().getZ();
 
-        for (int cx = playerChunkX; cx <= playerChunkX + chunks; cx++) {
-            for (int cz = playerChunkZ; cz <= playerChunkZ + chunks; cz++) {
+        for (int cx = playerChunkX; cx < playerChunkX + chunks; cx++) {
+            for (int cz = playerChunkZ; cz < playerChunkZ + chunks; cz++) {
                 int chunkX = cx - chunks / 2;
                 int chunkZ = cz - chunks / 2;
 
