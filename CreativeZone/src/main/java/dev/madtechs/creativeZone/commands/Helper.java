@@ -11,7 +11,11 @@ import dev.madtechs.creativeZone.voidWorld.VoidWorld;
 import dev.madtechs.creativeZone.voidWorld.ZoneMaker;
 
 public class Helper {
-    public static void buildChunks(Player player, JavaPlugin plugin, int chunks, boolean teleport) {
+    public static boolean buildChunks(Player player, JavaPlugin plugin, int chunks, boolean teleport) {
+        if (chunks > 4) {
+            player.sendMessage("You can't generate a zone or pull more than 4 chunks at once.");
+        }
+
         WorldCreator creativeZone = VoidWorld.getVoidWorld();
 
         World currentWorld = new WorldCreator("world").createWorld();
@@ -31,9 +35,11 @@ public class Helper {
 
             player.teleport(playerLocation);
         }
+
+        return true;
     }
 
-    public static void buildChunks(Player player, JavaPlugin plugin, int chunks) {
-        buildChunks(player, plugin, chunks, true);
+    public static boolean buildChunks(Player player, JavaPlugin plugin, int chunks) {
+        return buildChunks(player, plugin, chunks, true);
     }
 }

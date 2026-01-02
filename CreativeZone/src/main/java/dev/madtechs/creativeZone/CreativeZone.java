@@ -2,6 +2,7 @@ package dev.madtechs.creativeZone;
 
 import dev.madtechs.creativeZone.commands.CreateZone;
 import dev.madtechs.creativeZone.commands.GoToOverworld;
+import dev.madtechs.creativeZone.commands.GoToZone;
 import dev.madtechs.creativeZone.commands.PullChunks;
 
 import org.bukkit.*;
@@ -17,9 +18,10 @@ public class CreativeZone extends JavaPlugin implements Listener {
 
         instance = this;
 
-        getCommand("makeZone").setExecutor(new CreateZone());
-        getCommand("goToOverworld").setExecutor(new GoToOverworld());
+        getCommand("createZone").setExecutor(new CreateZone());
         getCommand("pullChunks").setExecutor(new PullChunks());
+        getCommand("goToOverworld").setExecutor(new GoToOverworld());
+        getCommand("goToZone").setExecutor(new GoToZone());
 
     }
 

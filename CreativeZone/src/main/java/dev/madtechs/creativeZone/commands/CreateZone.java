@@ -18,11 +18,13 @@ public class CreateZone implements CommandExecutor {
             return true;
         }
         
+        // If the player is already in a zone, pull the chunks instead
+        if ((player.getLocation().getWorld().getName().contains("c_zone"))) {
+            return new PullChunks().onCommand(sender, command, label, args);
+        }
+
         int chunks = Integer.parseInt(args[0]);
 
-        Helper.buildChunks(player, plugin, chunks);
-
-        return true;
-
+        return Helper.buildChunks(player, plugin, chunks);
     }
 }

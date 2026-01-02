@@ -1,5 +1,6 @@
 package dev.madtechs.creativeZone.commands;
 
+import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -18,11 +19,15 @@ public class PullChunks implements CommandExecutor {
             return true;
         }
         
+        World world = player.getWorld();
+
+        if (!world.getName().contains("c_zone")) {
+            player.sendMessage("You aren't in a creative zone!");
+            return true;
+        }
+
         int chunks = Integer.parseInt(args[0]);
 
-        Helper.buildChunks(player, plugin, chunks, false);
-
-        return true;
-
+        return Helper.buildChunks(player, plugin, chunks, false);
     }
 }
