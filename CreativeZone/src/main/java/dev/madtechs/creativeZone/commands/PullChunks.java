@@ -21,7 +21,7 @@ public class PullChunks implements CommandExecutor {
         
         World world = player.getWorld();
 
-        if (!world.getName().contains("c_zone")) {
+        if (!world.getName().contains(player.getUniqueId().toString())) {
             player.sendMessage("You aren't in a creative zone!");
             return true;
         }

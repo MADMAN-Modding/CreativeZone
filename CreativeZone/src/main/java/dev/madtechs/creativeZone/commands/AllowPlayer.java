@@ -1,7 +1,5 @@
 package dev.madtechs.creativeZone.commands;
 
-import org.bukkit.GameMode;
-import org.bukkit.WorldCreator;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -10,7 +8,8 @@ import org.bukkit.entity.Player;
 import dev.madtechs.creativeZone.CreativeZone;
 import dev.madtechs.creativeZone.dataControl.Control;
 
-public class GoToOverworld implements CommandExecutor {
+
+public class AllowPlayer implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (!(sender instanceof Player player)) {
@@ -18,26 +17,18 @@ public class GoToOverworld implements CommandExecutor {
             return true;
         }
 
-        teleportToOverworld(player);
-
-        return true;
-    }
-
-    public void teleportToOverworld(Player player) {
-        var overworld = new WorldCreator("world").createWorld();
-
-        var location = player.getLocation();
-
-        location.setWorld(overworld);
-
-        player.teleport(location);
+        if (args.length != 1) {
+            player.sendMessage("Must provide a player name!");
+            return true;
+        }
 
         Control control = CreativeZone.getControl();
 
-        GameMode gameMode = control.getPlayerData(player).getPreviousGameMode();
+        var data = control.getPlayerData(player);
 
-        player.sendMessage("Restoring GameMode to: " + gameMode.name());
+        data.allowPlayer(args[0]);
 
-        player.setGameMode(gameMode);
+        player.sendMessage("Allowed: " + args[0]);
+        return true;
     }
 }

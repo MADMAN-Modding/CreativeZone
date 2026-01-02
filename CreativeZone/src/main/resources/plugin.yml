@@ -18,7 +18,12 @@ commands:
     usage: /<command>
   goToZone:
     description: Go to your zone
-    usage: /<command>
+    usage: /<command> [player]
   deleteZone:
     description: Delete your zone
     Usage: /<command> [player]
+  allowPlayer:
+    description: Allow a player in your zone
+    Usage: /<command> <playerName>
+  listAllowedPlayers:
+    description: List of the allowed players
