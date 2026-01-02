@@ -19,3 +19,6 @@ commands:
   goToZone:
     description: Go to your zone
     usage: /<command>
+  deleteZone:
+    description: Delete your zone
+    Usage: /<command> [player]

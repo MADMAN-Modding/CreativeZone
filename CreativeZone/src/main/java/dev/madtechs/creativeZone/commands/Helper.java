@@ -22,6 +22,7 @@ public class Helper {
 
         World creativeWorld = creativeZone.createWorld();
 
+
         player.setGameMode(GameMode.CREATIVE);
 
         // Set the data
