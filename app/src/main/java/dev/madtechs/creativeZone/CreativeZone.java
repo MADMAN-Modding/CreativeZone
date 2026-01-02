@@ -29,14 +29,16 @@ public class CreativeZone extends JavaPlugin implements Listener {
         // Generate the creative world
         World creativeWorld = creativeZone.createWorld();
 
-        Location location = new Location(creativeWorld, 0, 100, 0);
-
         player.setGameMode(GameMode.CREATIVE);
 
-        player.teleport(location);
+        Location playerLocation = player.getLocation();
+
+        playerLocation.setWorld(creativeWorld);
+
+        player.teleport(playerLocation);
 
         // Set the data
-        ZoneMaker.makeWorld(creativeWorld, currentWorld, 4, location, this);
+        ZoneMaker.makeWorld(creativeWorld, currentWorld, 4, player.getLocation(), this);
 
     }
 }
