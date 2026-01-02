@@ -5,3 +5,8 @@ description: A plugin that allows players to make separate worlds that are in cr
 author: PaperMC
 website: https://github.com/MADMAN-Modding/CreativeZones
 api-version: '1.21.11'
+
+commands:
+  makeZone:
+    description: Manage horse actions like spawn and despawn
+    usage: /<command> <chunks>
