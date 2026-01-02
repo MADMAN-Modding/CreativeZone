@@ -16,11 +16,10 @@ public class Helper {
             player.sendMessage("You can't generate a zone or pull more than 4 chunks at once.");
         }
 
-        WorldCreator creativeZone = VoidWorld.getVoidWorld();
+        WorldCreator creativeZone = VoidWorld.getVoidWorld(player.getUniqueId().toString());
 
         World currentWorld = new WorldCreator("world").createWorld();
 
-        // Generate the creative world
         World creativeWorld = creativeZone.createWorld();
 
         player.setGameMode(GameMode.CREATIVE);

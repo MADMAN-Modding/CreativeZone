@@ -17,7 +17,7 @@ public class CreateZone implements CommandExecutor {
             sender.sendMessage("You aren't a player!");
             return true;
         }
-        
+
         // If the player is already in a zone, pull the chunks instead
         if ((player.getLocation().getWorld().getName().contains("c_zone"))) {
             return new PullChunks().onCommand(sender, command, label, args);

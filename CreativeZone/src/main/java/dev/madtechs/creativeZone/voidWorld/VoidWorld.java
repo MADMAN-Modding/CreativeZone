@@ -6,18 +6,16 @@ import org.bukkit.generator.BiomeProvider;
 import org.bukkit.generator.ChunkGenerator;
 import org.bukkit.generator.WorldInfo;
 import org.jetbrains.annotations.NotNull;
-import org.jspecify.annotations.NonNull;
 
 import java.util.List;
 import java.util.Random;
 
 public class VoidWorld {
-    public static WorldCreator getVoidWorld() {
-        WorldCreator worldCreator = new WorldCreator("c_zones/void");
+    public static WorldCreator getVoidWorld(String playerUUID) {
+        WorldCreator worldCreator = new WorldCreator("c_zones/" + playerUUID);
 
         worldCreator.biomeProvider(getBiomeProvider());
         worldCreator.generator(getChunkGenerator());
-
 
         return worldCreator;
     }
@@ -44,45 +42,79 @@ public class VoidWorld {
     private static ChunkGenerator getChunkGenerator() {
         return new ChunkGenerator() {
             @Override
-            public @NonNull BiomeProvider getDefaultBiomeProvider(final @NotNull WorldInfo worldInfo) {
+            public BiomeProvider getDefaultBiomeProvider(final @NotNull WorldInfo worldInfo) {
                 return getBiomeProvider();
             }
 
             @Override
-            public boolean shouldGenerateNoise(final @NotNull WorldInfo worldInfo, final @NotNull Random random, final int chunkX,
-                                               final int chunkZ) {
+            public boolean shouldGenerateNoise() {
+                return false;
+            }
+
+            @Override
+            public boolean shouldGenerateNoise(final @NotNull WorldInfo worldInfo, final @NotNull Random random,
+                    final int chunkX,
+                    final int chunkZ) {
+                return false;
+            }
+
+            @Override
+            public boolean shouldGenerateSurface() {
                 return false;
             }
 
             @Override
             public boolean shouldGenerateSurface(final @NotNull WorldInfo worldInfo, final @NotNull Random random,
-                                                 final int chunkX, final int chunkZ) {
+                    final int chunkX, final int chunkZ) {
                 return false;
             }
 
             @Override
-            public boolean shouldGenerateCaves(final @NotNull WorldInfo worldInfo, final @NotNull Random random, final int chunkX,
-                                               final int chunkZ) {
+            public boolean shouldGenerateCaves() {
+                return false;
+            }
+
+            @Override
+            public boolean shouldGenerateCaves(final @NotNull WorldInfo worldInfo, final @NotNull Random random,
+                    final int chunkX,
+                    final int chunkZ) {
+                return false;
+            }
+
+            @Override
+            public boolean shouldGenerateDecorations() {
                 return false;
             }
 
             @Override
             public boolean shouldGenerateDecorations(final @NotNull WorldInfo worldInfo, final @NotNull Random random,
-                                                     final int chunkX, final int chunkZ) {
+                    final int chunkX, final int chunkZ) {
                 return false;
             }
 
             @Override
-            public boolean shouldGenerateMobs(final @NotNull WorldInfo worldInfo, final @NotNull Random random, final int chunkX,
-                                              final int chunkZ) {
+            public boolean shouldGenerateMobs() {
+                return false;
+            }
+
+            @Override
+            public boolean shouldGenerateMobs(final @NotNull WorldInfo worldInfo, final @NotNull Random random,
+                    final int chunkX,
+                    final int chunkZ) {
+                return false;
+            }
+
+            @Override
+            public boolean shouldGenerateStructures() {
                 return false;
             }
 
             @Override
             public boolean shouldGenerateStructures(final @NotNull WorldInfo worldInfo, final @NotNull Random random,
-                                                    final int chunkX, final int chunkZ) {
+                    final int chunkX, final int chunkZ) {
                 return false;
             }
+
         };
     }
 
