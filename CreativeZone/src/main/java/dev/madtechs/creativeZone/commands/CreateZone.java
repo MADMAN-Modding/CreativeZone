@@ -18,9 +18,14 @@ public class CreateZone implements CommandExecutor {
             return true;
         }
 
+        var playerWorld = player.getLocation().getWorld();
+
         // If the player is already in a zone, pull the chunks instead
-        if ((player.getLocation().getWorld().getName().contains("c_zone"))) {
+        if ((playerWorld.getName().contains("c_zone"))) {
             return new PullChunks().onCommand(sender, command, label, args);
+        } else if (!playerWorld.getName().equals("world")) {
+            player.sendMessage("You need to be in the overworld when creating a zone");
+            return true;
         }
 
         int chunks = Integer.parseInt(args[0]);
