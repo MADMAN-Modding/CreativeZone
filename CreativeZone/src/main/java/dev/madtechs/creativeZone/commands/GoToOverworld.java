@@ -8,7 +8,6 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import dev.madtechs.creativeZone.CreativeZone;
-import dev.madtechs.creativeZone.dataControl.Control;
 
 public class GoToOverworld implements CommandExecutor {
     @Override
@@ -24,6 +23,14 @@ public class GoToOverworld implements CommandExecutor {
     }
 
     public void teleportToOverworld(Player player) {
+        if (player.getWorld().getName().equals("world")) {
+            return;
+        }
+
+        var control = CreativeZone.getControl();
+
+        control.saveCreative(player);
+
         var overworld = new WorldCreator("world").createWorld();
 
         var location = player.getLocation();
@@ -32,11 +39,9 @@ public class GoToOverworld implements CommandExecutor {
 
         player.teleport(location);
 
-        Control control = CreativeZone.getControl();
+        control.loadSurvival(player);
 
         GameMode gameMode = control.getPlayerData(player).getPreviousGameMode();
-
-        player.sendMessage("Restoring GameMode to: " + gameMode.name());
 
         player.setGameMode(gameMode);
     }

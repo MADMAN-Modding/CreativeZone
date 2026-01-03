@@ -47,6 +47,15 @@ public class GoToZone implements CommandExecutor {
             zoneOwner = player;
         }
 
+        teleportToZone(player, zoneOwner, control);
+
+        return true;
+    }
+
+    public static void teleportToZone(Player player, Player zoneOwner, Control control) {
+        control.saveSurvival(player);
+        
+        
         VoidWorld.getVoidWorld(zoneOwner.getUniqueId().toString()).createWorld();
 
         var zone = new WorldCreator("c_zones/" + zoneOwner.getUniqueId().toString()).createWorld();
@@ -59,7 +68,6 @@ public class GoToZone implements CommandExecutor {
 
         player.setGameMode(GameMode.CREATIVE);
 
-        return true;
-
+        control.loadCreative(player);
     }
 }
