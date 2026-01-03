@@ -6,6 +6,7 @@ import java.util.UUID;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 
@@ -21,10 +22,12 @@ public class PlayerData {
     private ItemStack[] survivalContents;
     private ItemStack[] survivalArmor;
     private ItemStack survivalOffhand;
+    private ItemStack[] survivalEnderChest;
 
     private ItemStack[] creativeContents;
     private ItemStack[] creativeArmor;
     private ItemStack creativeOffhand;
+    private ItemStack[] creativeEnderChest;
 
     // XP snapshots
     private int survivalLevel;
@@ -83,9 +86,10 @@ public class PlayerData {
 
     public void saveSurvival(Player player) {
         PlayerInventory inv = player.getInventory();
-        this.survivalContents = copy(inv.getContents());
+        this.survivalContents = copy(inv);
         this.survivalArmor = copy(inv.getArmorContents());
         this.survivalOffhand = cloneItem(inv.getItemInOffHand());
+        this.survivalEnderChest = copy(player.getEnderChest());
 
         this.survivalLevel = player.getLevel();
         this.survivalExp = player.getExp();
@@ -94,9 +98,10 @@ public class PlayerData {
 
     public void saveCreative(Player player) {
         PlayerInventory inv = player.getInventory();
-        this.creativeContents = copy(inv.getContents());
+        this.creativeContents = copy(inv);
         this.creativeArmor = copy(inv.getArmorContents());
         this.creativeOffhand = cloneItem(inv.getItemInOffHand());
+        this.creativeEnderChest = copy(player.getEnderChest());
 
         this.creativeLevel = player.getLevel();
         this.creativeExp = player.getExp();
@@ -106,11 +111,14 @@ public class PlayerData {
     public void loadSurvival(Player player) {
         PlayerInventory inv = player.getInventory();
         inv.clear();
+        player.getEnderChest().clear();
 
         if (survivalContents != null)
             inv.setContents(copy(survivalContents));
         if (survivalArmor != null)
             inv.setArmorContents(copy(survivalArmor));
+        if (survivalEnderChest != null)
+            player.getEnderChest().setContents(copy(survivalEnderChest));
         inv.setItemInOffHand(cloneItem(survivalOffhand));
 
         restoreXP(player, survivalLevel, survivalExp, survivalTotalExp);
@@ -119,11 +127,14 @@ public class PlayerData {
     public void loadCreative(Player player) {
         PlayerInventory inv = player.getInventory();
         inv.clear();
+        player.getEnderChest().clear();
 
         if (creativeContents != null)
             inv.setContents(copy(creativeContents));
         if (creativeArmor != null)
             inv.setArmorContents(copy(creativeArmor));
+        if (creativeEnderChest != null)
+            player.getEnderChest().setContents(copy(creativeEnderChest));
         inv.setItemInOffHand(cloneItem(creativeOffhand));
 
         restoreXP(player, creativeLevel, creativeExp, creativeTotalExp);
@@ -175,6 +186,10 @@ public class PlayerData {
             clone[i] = cloneItem(contents[i]);
         }
         return clone;
+    }
+
+    private ItemStack[] copy(Inventory inv) {
+        return copy(inv.getContents());
     }
 
     private ItemStack cloneItem(ItemStack item) {

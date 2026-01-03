@@ -1,5 +1,6 @@
 package dev.madtechs.creativeZone.commands;
 
+import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -26,7 +27,7 @@ public class Helper {
 
         WorldCreator creativeZone = VoidWorld.getVoidWorld(player.getUniqueId().toString());
 
-        World currentWorld = new WorldCreator("world").createWorld();
+        World currentWorld = Bukkit.getWorld("world");
 
         World creativeWorld = creativeZone.createWorld();
 
