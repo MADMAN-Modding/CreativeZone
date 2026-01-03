@@ -36,7 +36,7 @@ public class PlayerData {
     private int creativeTotalExp;
 
     public PlayerData(UUID playerUUID, ArrayList<UUID> allowedPlayers,
-                      String previousWorld, GameMode previousGameMode) {
+            String previousWorld, GameMode previousGameMode) {
         this.playerUUID = playerUUID;
         this.allowedPlayers = allowedPlayers;
         this.previousWorld = previousWorld;
@@ -44,7 +44,7 @@ public class PlayerData {
     }
 
     /* ===================== */
-    /*   BASIC GET / SET     */
+    /* BASIC GET / SET */
     /* ===================== */
 
     public UUID getPlayerUUID() {
@@ -64,7 +64,13 @@ public class PlayerData {
     }
 
     public GameMode getPreviousGameMode() {
-        return previousGameMode;
+        var defaultGameMode = Bukkit.getDefaultGameMode();
+
+        // If no previous gameMode was set, get the world default and set gameMode to that
+        if (previousGameMode == null)
+            return defaultGameMode;
+        else
+            return previousGameMode;
     }
 
     public void setPreviousGameMode(GameMode previousGameMode) {
@@ -72,7 +78,7 @@ public class PlayerData {
     }
 
     /* ===================== */
-    /*   INVENTORY + XP SAVE */
+    /* INVENTORY + XP SAVE */
     /* ===================== */
 
     public void saveSurvival(Player player) {
@@ -101,8 +107,10 @@ public class PlayerData {
         PlayerInventory inv = player.getInventory();
         inv.clear();
 
-        if (survivalContents != null) inv.setContents(copy(survivalContents));
-        if (survivalArmor != null) inv.setArmorContents(copy(survivalArmor));
+        if (survivalContents != null)
+            inv.setContents(copy(survivalContents));
+        if (survivalArmor != null)
+            inv.setArmorContents(copy(survivalArmor));
         inv.setItemInOffHand(cloneItem(survivalOffhand));
 
         restoreXP(player, survivalLevel, survivalExp, survivalTotalExp);
@@ -112,15 +120,17 @@ public class PlayerData {
         PlayerInventory inv = player.getInventory();
         inv.clear();
 
-        if (creativeContents != null) inv.setContents(copy(creativeContents));
-        if (creativeArmor != null) inv.setArmorContents(copy(creativeArmor));
+        if (creativeContents != null)
+            inv.setContents(copy(creativeContents));
+        if (creativeArmor != null)
+            inv.setArmorContents(copy(creativeArmor));
         inv.setItemInOffHand(cloneItem(creativeOffhand));
 
         restoreXP(player, creativeLevel, creativeExp, creativeTotalExp);
     }
 
     /* ===================== */
-    /*   XP RESTORE          */
+    /* XP RESTORE */
     /* ===================== */
 
     private void restoreXP(Player player, int level, float exp, int total) {
@@ -134,7 +144,7 @@ public class PlayerData {
     }
 
     /* ===================== */
-    /*   ALLOWED PLAYERS     */
+    /* ALLOWED PLAYERS */
     /* ===================== */
 
     public boolean isPlayerAllowed(Player player) {
@@ -153,11 +163,12 @@ public class PlayerData {
     }
 
     /* ===================== */
-    /*   CLONE UTILITIES     */
+    /* CLONE UTILITIES */
     /* ===================== */
 
     private ItemStack[] copy(ItemStack[] contents) {
-        if (contents == null) return null;
+        if (contents == null)
+            return null;
 
         ItemStack[] clone = new ItemStack[contents.length];
         for (int i = 0; i < contents.length; i++) {

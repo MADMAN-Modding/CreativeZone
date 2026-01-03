@@ -8,22 +8,21 @@ import dev.madtechs.creativeZone.commands.GoToZone;
 import dev.madtechs.creativeZone.commands.PullChunks;
 import dev.madtechs.creativeZone.commands.AllowPlayer;
 import dev.madtechs.creativeZone.dataControl.Control;
+import dev.madtechs.creativeZone.eventListeners.Death;
+import dev.madtechs.creativeZone.eventListeners.PlayerJoinLeave;
 
-import org.bukkit.*;
-import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public class CreativeZone extends JavaPlugin implements Listener {
+public class CreativeZone extends JavaPlugin {
     private static CreativeZone instance;
     private static Control control;
 
     @Override
     public void onEnable() {
-        Bukkit.getPluginManager().registerEvents(this, this);
-
         instance = this;
         control = new Control();
 
+        // Command Registers
         getCommand("createZone").setExecutor(new CreateZone());
         getCommand("pullChunks").setExecutor(new PullChunks());
         getCommand("deleteZone").setExecutor(new DeleteZone());
@@ -31,6 +30,10 @@ public class CreativeZone extends JavaPlugin implements Listener {
         getCommand("goToZone").setExecutor(new GoToZone());
         getCommand("allowPlayer").setExecutor(new AllowPlayer());
         getCommand("listAllowedPlayers").setExecutor(new GetAllowedPlayers());
+
+        // Event listeners registers
+        getServer().getPluginManager().registerEvents(new Death(), this);
+        getServer().getPluginManager().registerEvents(new PlayerJoinLeave(), this);
     }
 
     public static CreativeZone getInstance() {
