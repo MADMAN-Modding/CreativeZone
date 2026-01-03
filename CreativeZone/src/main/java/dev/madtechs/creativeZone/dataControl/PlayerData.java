@@ -5,6 +5,7 @@ import java.util.UUID;
 
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
+import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -37,6 +38,9 @@ public class PlayerData {
     private int creativeLevel;
     private float creativeExp;
     private int creativeTotalExp;
+
+    // Other snapshots (location only stored for survival)
+    private Location survivalLocation;
 
     public PlayerData(UUID playerUUID, ArrayList<UUID> allowedPlayers,
             String previousWorld, GameMode previousGameMode) {
@@ -80,6 +84,10 @@ public class PlayerData {
         this.previousGameMode = previousGameMode;
     }
 
+    public Location getSurvivalLocation() {
+        return survivalLocation;
+    }
+
     /* ===================== */
     /* INVENTORY + XP SAVE */
     /* ===================== */
@@ -94,6 +102,8 @@ public class PlayerData {
         this.survivalLevel = player.getLevel();
         this.survivalExp = player.getExp();
         this.survivalTotalExp = player.getTotalExperience();
+
+        this.survivalLocation = player.getLocation().clone();
     }
 
     public void saveCreative(Player player) {

@@ -1,7 +1,6 @@
 package dev.madtechs.creativeZone.commands;
 
 import org.bukkit.GameMode;
-import org.bukkit.WorldCreator;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -31,15 +30,12 @@ public class GoToOverworld implements CommandExecutor {
 
         control.saveCreative(player);
 
-        var overworld = new WorldCreator("world").createWorld();
-
-        var location = player.getLocation();
-
-        location.setWorld(overworld);
-
-        player.teleport(location);
-
         control.loadSurvival(player);
+
+        var location = control.getPlayerData(player).getSurvivalLocation();
+
+        if (location != null)
+            player.teleport(location);
 
         GameMode gameMode = control.getPlayerData(player).getPreviousGameMode();
 

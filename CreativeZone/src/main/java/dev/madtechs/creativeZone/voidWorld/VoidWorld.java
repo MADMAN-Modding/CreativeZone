@@ -94,14 +94,14 @@ public class VoidWorld {
 
             @Override
             public boolean shouldGenerateMobs() {
-                return false;
+                return true;
             }
 
             @Override
             public boolean shouldGenerateMobs(final @NotNull WorldInfo worldInfo, final @NotNull Random random,
                     final int chunkX,
                     final int chunkZ) {
-                return false;
+                return true;
             }
 
             @Override
