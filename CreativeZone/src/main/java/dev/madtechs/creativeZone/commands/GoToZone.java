@@ -1,7 +1,6 @@
 package dev.madtechs.creativeZone.commands;
 
 import org.bukkit.Bukkit;
-import org.bukkit.GameMode;
 import org.bukkit.WorldCreator;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -53,9 +52,6 @@ public class GoToZone implements CommandExecutor {
     }
 
     public static void teleportToZone(Player player, Player zoneOwner, Control control) {
-        control.saveSurvival(player);
-        
-        
         VoidWorld.getVoidWorld(zoneOwner.getUniqueId().toString()).createWorld();
 
         var zone = new WorldCreator("c_zones/" + zoneOwner.getUniqueId().toString()).createWorld();
@@ -65,9 +61,5 @@ public class GoToZone implements CommandExecutor {
         location.setWorld(zone);
         
         player.teleport(location);
-
-        player.setGameMode(GameMode.CREATIVE);
-
-        control.loadCreative(player);
     }
 }
