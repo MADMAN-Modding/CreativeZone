@@ -15,10 +15,13 @@ public class Death implements Listener {
             return;
         }
 
-        var control = CreativeZone.getControl();
+        var worldName = player.getWorld().getName();
 
-        control.loadSurvival(player);
-        player.setGameMode(Bukkit.getDefaultGameMode());
+        if (worldName.contains("c_zone")) {
+            var control = CreativeZone.getControl();
 
+            control.loadSurvival(player);
+            player.setGameMode(Bukkit.getDefaultGameMode());
+        }    
     }
 }
