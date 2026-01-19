@@ -19,7 +19,7 @@ public class WorldChange implements Listener {
         String entityWorld = entity.getWorld().getName();
         String destinationWorld = event.getTo().getWorld().getName();
 
-        // If the player is moving within the world they are in
+        // If the entity is moving within the world they are in
         if (entityWorld.equals(destinationWorld)) return;
 
 
@@ -35,6 +35,10 @@ public class WorldChange implements Listener {
 
         String playerWorld = player.getWorld().getName();
         String destinationWorld = event.getTo().getWorld().getName();
+
+        // If the player is moving within the world they are in
+        if (playerWorld.equals(destinationWorld)) return;
+
 
         // If the player is teleporting from a creative zone to another world
         if (playerWorld.contains("c_zone") && !destinationWorld.contains("c_zone")) {
