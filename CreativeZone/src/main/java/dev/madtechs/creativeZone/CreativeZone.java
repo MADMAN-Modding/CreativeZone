@@ -11,6 +11,8 @@ import dev.madtechs.creativeZone.dataControl.Control;
 import dev.madtechs.creativeZone.eventListeners.Death;
 import dev.madtechs.creativeZone.eventListeners.PlayerJoinLeave;
 import dev.madtechs.creativeZone.eventListeners.WorldChange;
+import dev.madtechs.creativeZone.eventListeners.ZoneChunkListener;
+import dev.madtechs.creativeZone.eventListeners.ZonePortal;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -36,6 +38,8 @@ public class CreativeZone extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new Death(), this);
         getServer().getPluginManager().registerEvents(new PlayerJoinLeave(), this);
         getServer().getPluginManager().registerEvents(new WorldChange(), this);
+        getServer().getPluginManager().registerEvents(new ZoneChunkListener(), this);
+        getServer().getPluginManager().registerEvents(new ZonePortal(), this);
     }
 
     public static CreativeZone getInstance() {

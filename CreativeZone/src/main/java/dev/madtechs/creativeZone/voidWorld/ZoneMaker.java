@@ -1,15 +1,10 @@
 package dev.madtechs.creativeZone.voidWorld;
 
-import java.util.logging.Level;
-
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.Block;
-import org.bukkit.block.BlockState;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.jetbrains.annotations.NotNull;
 
@@ -27,7 +22,7 @@ public class ZoneMaker {
                 int chunkX = cx;
                 int chunkZ = cz;
 
-                var logger = plugin.getLogger();
+                // var logger = plugin.getLogger();
 
                 // logger.log(Level.INFO, "Chunk loading at: [" + chunkX + "," + chunkZ + "]");
 

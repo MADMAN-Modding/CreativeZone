@@ -25,17 +25,18 @@ public class Helper {
             control.setPreviousGameMode(player);
         }
 
-        WorldCreator creativeZone = VoidWorld.getVoidWorld(player.getUniqueId().toString());
+        // The real world for the dimension the player is in, never a zone
+        World sourceWorld = getSourceWorld(player.getWorld());
 
-        World currentWorld = Bukkit.getWorld("world");
+        WorldCreator creativeZone = VoidWorld.getVoidWorld(player.getUniqueId().toString(), sourceWorld);
 
         World creativeWorld = creativeZone.createWorld();
 
         player.setGameMode(GameMode.CREATIVE);
 
         // Set the data
-        ZoneMaker.makeWorld(creativeWorld, currentWorld, chunks, player.getLocation(), plugin);
-    
+        ZoneMaker.makeWorld(creativeWorld, sourceWorld, chunks, player.getLocation(), plugin);
+
         if (teleport) {
             Location playerLocation = player.getLocation();
 
@@ -49,5 +50,31 @@ public class Helper {
 
     public static boolean buildChunks(Player player, JavaPlugin plugin, int chunks) {
         return buildChunks(player, plugin, chunks, true);
+    }
+
+    /**
+     * Finds the real world matching a world's dimension, so a player standing in a zone
+     * resolves back to the world the zone was built from
+     *
+     * @return World
+     */
+    public static World getSourceWorld(World world) {
+        // Already a real world
+        if (!world.getName().contains("c_zone")) {
+            return world;
+        }
+
+        for (World candidate : Bukkit.getWorlds()) {
+            if (candidate.getName().contains("c_zone")) {
+                continue;
+            }
+
+            if (candidate.getEnvironment() == world.getEnvironment()) {
+                return candidate;
+            }
+        }
+
+        // Nothing matched, fall back to the main world
+        return Bukkit.getWorlds().get(0);
     }
 }

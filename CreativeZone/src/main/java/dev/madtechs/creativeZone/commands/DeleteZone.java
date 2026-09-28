@@ -24,7 +24,7 @@ public class DeleteZone implements CommandExecutor {
             return true;
         }
 
-        World zone = VoidWorld.getVoidWorld(player.getUniqueId().toString()).createWorld();
+        World zone = VoidWorld.getVoidWorld(player.getUniqueId().toString(), player.getWorld()).createWorld();
 
         zone.setAutoSave(false);
 
@@ -34,7 +34,9 @@ public class DeleteZone implements CommandExecutor {
 
         boolean worldUnload = Bukkit.unloadWorld(zone, false);
 
-        File worldFolder = new File("c_zones/" + player.getUniqueId().toString());
+        File worldFolder = new File("world/dimensions/minecraft/c_zones/" + player.getUniqueId().toString());
+
+        System.out.println(worldFolder);
 
         if (deleteDirectory(worldFolder) && worldUnload) {
             player.sendMessage("Zone deleted!");

@@ -52,7 +52,7 @@ public class GoToZone implements CommandExecutor {
     }
 
     public static void teleportToZone(Player player, Player zoneOwner, Control control) {
-        VoidWorld.getVoidWorld(zoneOwner.getUniqueId().toString()).createWorld();
+        VoidWorld.getVoidWorld(zoneOwner.getUniqueId().toString(), player.getWorld()).createWorld();
 
         var zone = new WorldCreator("c_zones/" + zoneOwner.getUniqueId().toString()).createWorld();
 

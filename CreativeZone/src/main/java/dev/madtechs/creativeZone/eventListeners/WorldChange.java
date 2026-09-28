@@ -22,9 +22,7 @@ public class WorldChange implements Listener {
         // If the entity is moving within the world they are in
         if (entityWorld.equals(destinationWorld)) return;
 
-
         event.setCancelled(true);
-        
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
@@ -39,17 +37,21 @@ public class WorldChange implements Listener {
         // If the player is moving within the world they are in
         if (playerWorld.equals(destinationWorld)) return;
 
+        boolean fromZone = playerWorld.contains("c_zone");
+        boolean toZone = destinationWorld.contains("c_zone");
+
+        // If the player is moving between zone dimensions, they stay in creative and nothing is swapped
+        if (fromZone && toZone) return;
 
         // If the player is teleporting from a creative zone to another world
-        if (playerWorld.contains("c_zone") && !destinationWorld.contains("c_zone")) {
+        if (fromZone) {
             control.saveCreative(player);
             control.loadSurvival(player);
-            
             GameMode gameMode = control.getPlayerData(player).getPreviousGameMode();
             player.setGameMode(gameMode);
         }
         // If the player is going to a creative zone
-        else if (destinationWorld.contains("c_zone")) {
+        else if (toZone) {
             control.saveSurvival(player);
             control.loadCreative(player);
             player.setGameMode(GameMode.CREATIVE);

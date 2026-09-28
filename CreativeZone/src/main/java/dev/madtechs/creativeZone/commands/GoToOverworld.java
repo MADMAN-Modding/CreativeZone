@@ -21,7 +21,7 @@ public class GoToOverworld implements CommandExecutor {
     }
 
     public void teleportToOverworld(Player player) {
-        if (player.getWorld().getName().equals("world")) {
+        if (!player.getWorld().getName().contains("c_zone")) {
             return;
         }
 
