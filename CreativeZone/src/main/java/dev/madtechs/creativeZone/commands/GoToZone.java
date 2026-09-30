@@ -46,17 +46,22 @@ public class GoToZone implements CommandExecutor {
             zoneOwner = player;
         }
 
-        teleportToZone(player, zoneOwner, control);
+        teleportToZone(player, zoneOwner, VoidWorld.getSuffix(player.getWorld()), sender);
 
         return true;
     }
 
-    public static void teleportToZone(Player player, Player zoneOwner, Control control) {
+    public static void teleportToZone(Player player, Player zoneOwner, String world, CommandSender sender) {
         VoidWorld.getVoidWorld(zoneOwner.getUniqueId().toString(), player.getWorld()).createWorld();
 
-        var zone = new WorldCreator("c_zones/" + zoneOwner.getUniqueId().toString()).createWorld();
+        var zone = new WorldCreator("c_zones/" + zoneOwner.getUniqueId().toString() + world).createWorld();
 
         var location = player.getLocation();
+
+        if (player.getWorld().equals(zone)) {
+            sender.sendMessage("You are already in that world!");
+            return;
+        }
 
         location.setWorld(zone);
         

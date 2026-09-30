@@ -7,7 +7,7 @@ import org.bukkit.entity.Player;
 
 import dev.madtechs.creativeZone.CreativeZone;
 
-public class GoToOverworld implements CommandExecutor {
+public class LeaveZone implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (!(sender instanceof Player player)) {
@@ -15,13 +15,14 @@ public class GoToOverworld implements CommandExecutor {
             return true;
         }
 
-        teleportToOverworld(player);
+        leaveCZone(player, sender);
 
         return true;
     }
 
-    public void teleportToOverworld(Player player) {
+    public void leaveCZone(Player player, CommandSender sender) {
         if (!player.getWorld().getName().contains("c_zone")) {
+            sender.sendMessage("You aren't in a creative zone!");
             return;
         }
 

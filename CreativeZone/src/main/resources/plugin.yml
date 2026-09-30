@@ -13,7 +13,7 @@ commands:
   pullChunks:
     description: Pull chunks from the overworld
     usage: /<command> <chunks>
-  goToOverworld:
+  leaveZone:
     description: Go back to the overworld
     usage: /<command>
   goToZone:

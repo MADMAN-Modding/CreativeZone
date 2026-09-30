@@ -3,7 +3,7 @@ package dev.madtechs.creativeZone;
 import dev.madtechs.creativeZone.commands.CreateZone;
 import dev.madtechs.creativeZone.commands.DeleteZone;
 import dev.madtechs.creativeZone.commands.GetAllowedPlayers;
-import dev.madtechs.creativeZone.commands.GoToOverworld;
+import dev.madtechs.creativeZone.commands.LeaveZone;
 import dev.madtechs.creativeZone.commands.GoToZone;
 import dev.madtechs.creativeZone.commands.PullChunks;
 import dev.madtechs.creativeZone.commands.AllowPlayer;
@@ -20,6 +20,7 @@ public class CreativeZone extends JavaPlugin {
     private static CreativeZone instance;
     private static Control control;
 
+    @SuppressWarnings("null")
     @Override
     public void onEnable() {
         instance = this;
@@ -29,7 +30,7 @@ public class CreativeZone extends JavaPlugin {
         getCommand("createZone").setExecutor(new CreateZone());
         getCommand("pullChunks").setExecutor(new PullChunks());
         getCommand("deleteZone").setExecutor(new DeleteZone());
-        getCommand("goToOverworld").setExecutor(new GoToOverworld());
+        getCommand("leaveZone").setExecutor(new LeaveZone());
         getCommand("goToZone").setExecutor(new GoToZone());
         getCommand("allowPlayer").setExecutor(new AllowPlayer());
         getCommand("listAllowedPlayers").setExecutor(new GetAllowedPlayers());

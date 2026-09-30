@@ -14,8 +14,15 @@ import dev.madtechs.creativeZone.voidWorld.VoidWorld;
 public class DeleteZone implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+        // Control Checks
+
         if (!(sender instanceof Player player)) {
             sender.sendMessage("You aren't a player!");
+            return true;
+        }
+
+        if (!player.getWorld().getName().toString().contains("c_zone")) {
+            player.sendMessage("You aren't in a creative zone!");
             return true;
         }
 
@@ -24,25 +31,35 @@ public class DeleteZone implements CommandExecutor {
             return true;
         }
 
-        World zone = VoidWorld.getVoidWorld(player.getUniqueId().toString(), player.getWorld()).createWorld();
+        // Message to send to the user
+        String responseMessage = "";
 
-        zone.setAutoSave(false);
+        // Overworld has no extension
+        String[] worlds = { "", "_nether", "_end" };
 
-        for (Player zonePlayers : zone.getPlayers()) {
-            new GoToOverworld().teleportToOverworld(zonePlayers);
+        for (String world : worlds) {
+            World zone = VoidWorld.getVoidWorld(player.getUniqueId().toString(), player.getWorld()).createWorld();
+
+            zone.setAutoSave(false);
+
+            for (Player zonePlayer : zone.getPlayers()) {
+                new LeaveZone().leaveCZone(zonePlayer, sender);
+            }
+
+            boolean worldUnload = Bukkit.unloadWorld(zone, false);
+
+            String playerUUID = player.getUniqueId().toString();
+
+            File folder = new File(String.format("world/dimensions/minecraft/c_zones/%s%s", playerUUID, world));
+
+            if (deleteDirectory(folder) && worldUnload) {
+                responseMessage += "Successfully deleted world" + world; 
+            } else {
+                responseMessage += "Failed to delete world" + world;
+            }
         }
 
-        boolean worldUnload = Bukkit.unloadWorld(zone, false);
-
-        File worldFolder = new File("world/dimensions/minecraft/c_zones/" + player.getUniqueId().toString());
-
-        System.out.println(worldFolder);
-
-        if (deleteDirectory(worldFolder) && worldUnload) {
-            player.sendMessage("Zone deleted!");
-        } else {
-            player.sendMessage("Zone wasn't able to be deleted, does it exist?");
-        }
+        player.sendMessage(responseMessage);
 
         return true;
 
