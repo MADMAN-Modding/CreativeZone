@@ -18,4 +18,8 @@ public class ZoneGuard {
     public void unlock(String worldName) {
         busy.remove(worldName);
     }
+
+    public Set<String> getBusy() {
+        return busy;
+    }
 }

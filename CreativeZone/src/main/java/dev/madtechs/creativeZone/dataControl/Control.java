@@ -13,10 +13,6 @@ public class Control {
 
     private final HashMap<UUID, PlayerData> playerData = new HashMap<>();
 
-    /* ===================== */
-    /*   DATA ACCESS         */
-    /* ===================== */
-
     public PlayerData getPlayerData(Player player) {
         return playerData.computeIfAbsent(
             player.getUniqueId(),
@@ -33,10 +29,6 @@ public class Control {
         playerData.put(player.getUniqueId(), data);
     }
 
-    /* ===================== */
-    /*   STATE TRACKING      */
-    /* ===================== */
-
     public void setPreviousGameMode(Player player) {
         getPlayerData(player).setPreviousGameMode(player.getGameMode());
     }
@@ -44,10 +36,6 @@ public class Control {
     public void setPreviousWorld(Player player) {
         getPlayerData(player).setPreviousWorld(player.getWorld().getName());
     }
-
-    /* ===================== */
-    /*   INVENTORY + XP      */
-    /* ===================== */
 
     public void saveSurvival(Player player) {
         getPlayerData(player).saveSurvival(player);
@@ -70,10 +58,6 @@ public class Control {
             () -> getPlayerData(player).loadCreative(player)
         );
     }
-
-    /* ===================== */
-    /*   CLEANUP (OPTIONAL)  */
-    /* ===================== */
 
     public void removePlayer(Player player) {
         playerData.remove(player.getUniqueId());

@@ -5,7 +5,7 @@ import java.util.logging.Level;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 
-import dev.madtechs.creativeZone.commands.Helper;
+import dev.madtechs.creativeZone.Helper;
 
 public class ZoneUnloader {
     public static void checkToUnload(ZoneGuard guard) {

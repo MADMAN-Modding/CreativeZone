@@ -1,4 +1,4 @@
-package dev.madtechs.creativeZone.commands;
+package dev.madtechs.creativeZone;
 
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
@@ -8,7 +8,6 @@ import org.bukkit.WorldCreator;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import dev.madtechs.creativeZone.CreativeZone;
 import dev.madtechs.creativeZone.voidWorld.VoidWorld;
 import dev.madtechs.creativeZone.voidWorld.ZoneMaker;
 
@@ -53,7 +52,8 @@ public class Helper {
     }
 
     /**
-     * Finds the real world matching a world's dimension, so a player standing in a zone
+     * Finds the real world matching a world's dimension, so a player standing in a
+     * zone
      * resolves back to the world the zone was built from
      *
      * @return World
@@ -90,17 +90,17 @@ public class Helper {
         var location = player.getLocation();
 
         location.setWorld(zone);
-        
+
         player.teleport(location);
     }
 
-    public static void teleportToZone(Player player, String zoneOwner, String world, Location location) {
-        VoidWorld.getVoidWorld(zoneOwner, player.getWorld()).createWorld();
+    public static void teleportToZone(Player player, String zoneOwnerUUID, String world, Location location) {
+        VoidWorld.getVoidWorld(zoneOwnerUUID, player.getWorld()).createWorld();
 
-        var zone = new WorldCreator("c_zones/" + zoneOwner + world).createWorld();
+        var zone = new WorldCreator("c_zones/" + zoneOwnerUUID + world).createWorld();
 
         location.setWorld(zone);
-        
+
         player.teleport(location);
     }
 
@@ -119,6 +119,7 @@ public class Helper {
 
     /**
      * Check if a world is a zone
+     * 
      * @param world
      * @return True if it is a zone
      */
@@ -128,10 +129,19 @@ public class Helper {
 
     /**
      * Check if a world is a zone
+     * 
      * @param world
      * @return True if it is a zone
      */
     public static boolean isZone(World world) {
         return isZone(world.getName());
+    }
+
+    public static Player getPlayerFromName(String player) {
+        return Bukkit.getPlayer(player);
+    }
+
+    public static String buildWorldName(Player player, String suffix) {
+        return player.getUniqueId().toString() + suffix;
     }
 }

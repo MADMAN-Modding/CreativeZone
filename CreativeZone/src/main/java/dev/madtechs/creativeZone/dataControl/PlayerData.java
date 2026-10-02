@@ -41,6 +41,7 @@ public class PlayerData {
 
     // Other snapshots (location only stored for survival)
     private Location survivalLocation;
+    private Location creativeLocation;
 
     public PlayerData(UUID playerUUID, ArrayList<UUID> allowedPlayers,
             String previousWorld, GameMode previousGameMode) {
@@ -48,6 +49,8 @@ public class PlayerData {
         this.allowedPlayers = allowedPlayers;
         this.previousWorld = previousWorld;
         this.previousGameMode = previousGameMode;
+
+        this.allowedPlayers.add(playerUUID);
     }
 
     /* ===================== */
@@ -88,6 +91,10 @@ public class PlayerData {
         return survivalLocation;
     }
 
+    public Location getZoneLocation() {
+        return creativeLocation;
+    }
+
     /* ===================== */
     /* INVENTORY + XP SAVE */
     /* ===================== */
@@ -116,6 +123,8 @@ public class PlayerData {
         this.creativeLevel = player.getLevel();
         this.creativeExp = player.getExp();
         this.creativeTotalExp = player.getTotalExperience();
+
+        this.creativeLocation = player.getLocation().clone();
     }
 
     public void loadSurvival(Player player) {

@@ -11,6 +11,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
 import dev.madtechs.creativeZone.Constants;
+import dev.madtechs.creativeZone.Helper;
 import dev.madtechs.creativeZone.voidWorld.VoidWorld;
 import dev.madtechs.creativeZone.worldStateControl.ZoneGuard;
 
@@ -26,7 +27,6 @@ public class DeleteZone implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         // Control Checks
-
         if (!(sender instanceof Player player)) {
             sender.sendMessage("You aren't a player!");
             return true;
@@ -42,17 +42,16 @@ public class DeleteZone implements CommandExecutor {
             return true;
         }
 
-        // Message to send to the user
-        String responseMessage = "";
-
         // Overworld has no extension
         String[] worlds = { "", "_nether", "_end" };
+
+        for (String world : guard.getBusy()) {
+            player.sendMessage(world + " is busy");
+        }
 
         for (String world : worlds) {
             attemptWorldDelete(sender, world, Constants.WORLD_DELETE_ATTEMPTS, player);
         }
-
-        player.sendMessage(responseMessage);
 
         return true;
 
@@ -68,7 +67,10 @@ public class DeleteZone implements CommandExecutor {
         return directoryToBeDeleted.delete();
     }
 
-    private void attemptWorldDelete(CommandSender sender, String worldName, int attemptsRemaining, Player player) {
+    private void attemptWorldDelete(CommandSender sender, String worldSuffix, int attemptsRemaining, Player player) {
+        final String worldName = Helper.buildWorldName(player, worldSuffix);
+
+        // Lock Guard
         if (!guard.tryLock(worldName)) {
             if (attemptsRemaining <= 0) {
                 sender.sendMessage("Zone still busy, giving up.");
@@ -88,15 +90,18 @@ public class DeleteZone implements CommandExecutor {
 
             boolean worldUnload = Bukkit.unloadWorld(zone, false);
 
-            String playerUUID = player.getUniqueId().toString();
+            File folder = new File(String.format("world/dimensions/minecraft/c_zones/%s", worldName));
 
-            File folder = new File(String.format("world/dimensions/minecraft/c_zones/%s%s", playerUUID, worldName));
-
-            if (deleteDirectory(folder) && worldUnload) {
-                player.sendMessage("Successfully deleted world" + worldName);
-            } else {
-                player.sendMessage("Failed to delete world" + worldName);
+            if (folder.exists()) {
+                if (deleteDirectory(folder) && worldUnload) {
+                    player.sendMessage("Successfully deleted world: " + worldName);
+                } else {
+                    player.sendMessage("Failed to delete world: " + worldName);
+                }
             }
+
+            // Unlock Guard
+            guard.unlock(worldName);
         }
     }
 }

@@ -8,7 +8,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerPortalEvent;
 
-import dev.madtechs.creativeZone.commands.Helper;
+import dev.madtechs.creativeZone.Helper;
 import dev.madtechs.creativeZone.voidWorld.VoidWorld;
 
 public class ZonePortal implements Listener {

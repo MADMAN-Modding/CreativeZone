@@ -10,7 +10,7 @@ import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 
 import dev.madtechs.creativeZone.CreativeZone;
-import dev.madtechs.creativeZone.commands.Helper;
+import dev.madtechs.creativeZone.Helper;
 
 public class PlayerTeleport implements Listener {
     @EventHandler(priority = EventPriority.HIGHEST)

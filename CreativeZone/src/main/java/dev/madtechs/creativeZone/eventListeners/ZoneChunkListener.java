@@ -8,7 +8,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.world.ChunkLoadEvent;
 
-import dev.madtechs.creativeZone.commands.Helper;
+import dev.madtechs.creativeZone.Helper;
 
 public class ZoneChunkListener implements Listener {
     @EventHandler

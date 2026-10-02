@@ -7,6 +7,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import dev.madtechs.creativeZone.CreativeZone;
+import dev.madtechs.creativeZone.Helper;
 import dev.madtechs.creativeZone.dataControl.Control;
 import dev.madtechs.creativeZone.voidWorld.VoidWorld;
 
@@ -27,7 +28,6 @@ public class GoToZone implements CommandExecutor {
 
         if (args.length == 1) {
             String playerString = args[0];
-
 
             Player playerOwningZone = Bukkit.getPlayer(playerString);
 
