@@ -13,12 +13,17 @@ import dev.madtechs.creativeZone.eventListeners.PlayerJoinLeave;
 import dev.madtechs.creativeZone.eventListeners.PlayerTeleport;
 import dev.madtechs.creativeZone.eventListeners.ZoneChunkListener;
 import dev.madtechs.creativeZone.eventListeners.ZonePortal;
+import dev.madtechs.creativeZone.worldStateControl.ZoneGuard;
+import dev.madtechs.creativeZone.worldStateControl.ZoneUnloader;
 
+import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class CreativeZone extends JavaPlugin {
     private static CreativeZone instance;
     private static Control control;
+
+    private final ZoneGuard guard = new ZoneGuard();
 
     @SuppressWarnings("null")
     @Override
@@ -29,7 +34,7 @@ public class CreativeZone extends JavaPlugin {
         // Command Registers
         getCommand("createZone").setExecutor(new CreateZone());
         getCommand("pullChunks").setExecutor(new PullChunks());
-        getCommand("deleteZone").setExecutor(new DeleteZone());
+        getCommand("deleteZone").setExecutor(new DeleteZone(guard, this));
         getCommand("leaveZone").setExecutor(new LeaveZone());
         getCommand("goToZone").setExecutor(new GoToZone());
         getCommand("allowPlayer").setExecutor(new AllowPlayer());
@@ -41,6 +46,9 @@ public class CreativeZone extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new ZoneChunkListener(), this);
         getServer().getPluginManager().registerEvents(new ZonePortal(), this);
         getServer().getPluginManager().registerEvents(new PlayerTeleport(), this);
+
+        // Waits 1 minute to run the task and then runs the task every 1 minute
+        Bukkit.getScheduler().runTaskTimer(this, () -> ZoneUnloader.checkToUnload(guard), 20L * 60, 20L * 60);
     }
 
     public static CreativeZone getInstance() {

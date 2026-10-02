@@ -1,5 +1,6 @@
 package dev.madtechs.creativeZone.eventListeners;
 
+import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -14,7 +15,6 @@ import dev.madtechs.creativeZone.commands.Helper;
 public class PlayerTeleport implements Listener {
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onPlayerTeleport(PlayerTeleportEvent event) {
-        System.out.println("Player Teleporting!");
         var control = CreativeZone.getControl();
 
         Player player = event.getPlayer();
@@ -29,9 +29,6 @@ public class PlayerTeleport implements Listener {
         boolean fromZone = sourceWorld.contains("c_zone");
         boolean toZone = destinationWorld.contains("c_zone");
 
-
-        System.out.println(event.getCause());
-
         // Unknown is used to cover the end portal
         if (event.getCause() == TeleportCause.UNKNOWN && fromZone) {
             event.setCancelled(true);
@@ -40,6 +37,8 @@ public class PlayerTeleport implements Listener {
             var location = event.getTo();
 
             Helper.teleportToZone(player, owner, "", location);
+
+            Bukkit.getWorlds();
         }
 
         // If the player is moving between zone dimensions, they stay in creative and

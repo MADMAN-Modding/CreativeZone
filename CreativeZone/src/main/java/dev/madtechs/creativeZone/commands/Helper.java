@@ -116,4 +116,22 @@ public class Helper {
 
         return uuid;
     }
+
+    /**
+     * Check if a world is a zone
+     * @param world
+     * @return True if it is a zone
+     */
+    public static boolean isZone(String world) {
+        return world.contains("c_zones/");
+    }
+
+    /**
+     * Check if a world is a zone
+     * @param world
+     * @return True if it is a zone
+     */
+    public static boolean isZone(World world) {
+        return isZone(world.getName());
+    }
 }
