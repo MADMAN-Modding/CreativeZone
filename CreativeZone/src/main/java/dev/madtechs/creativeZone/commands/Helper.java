@@ -77,4 +77,43 @@ public class Helper {
         // Nothing matched, fall back to the main world
         return Bukkit.getWorlds().get(0);
     }
+
+    public static void teleportToZone(Player player, Player zoneOwner, String world) {
+        teleportToZone(player, zoneOwner.getUniqueId().toString(), world);
+    }
+
+    public static void teleportToZone(Player player, String zoneOwner, String world) {
+        VoidWorld.getVoidWorld(zoneOwner, player.getWorld()).createWorld();
+
+        var zone = new WorldCreator("c_zones/" + zoneOwner + world).createWorld();
+
+        var location = player.getLocation();
+
+        location.setWorld(zone);
+        
+        player.teleport(location);
+    }
+
+    public static void teleportToZone(Player player, String zoneOwner, String world, Location location) {
+        VoidWorld.getVoidWorld(zoneOwner, player.getWorld()).createWorld();
+
+        var zone = new WorldCreator("c_zones/" + zoneOwner + world).createWorld();
+
+        location.setWorld(zone);
+        
+        player.teleport(location);
+    }
+
+    public static String getOwnerUUID(String worldID) {
+        // Pull the uuid out of the zone name
+        String uuid = worldID.substring("c_zones/".length());
+
+        int suffixStart = uuid.indexOf("_");
+
+        if (suffixStart != -1) {
+            uuid = uuid.substring(0, suffixStart);
+        }
+
+        return uuid;
+    }
 }

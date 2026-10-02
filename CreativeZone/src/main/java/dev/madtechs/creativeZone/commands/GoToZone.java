@@ -1,7 +1,6 @@
 package dev.madtechs.creativeZone.commands;
 
 import org.bukkit.Bukkit;
-import org.bukkit.WorldCreator;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -46,25 +45,8 @@ public class GoToZone implements CommandExecutor {
             zoneOwner = player;
         }
 
-        teleportToZone(player, zoneOwner, VoidWorld.getSuffix(player.getWorld()), sender);
+        Helper.teleportToZone(player, zoneOwner, VoidWorld.getSuffix(player.getWorld()));
 
         return true;
-    }
-
-    public static void teleportToZone(Player player, Player zoneOwner, String world, CommandSender sender) {
-        VoidWorld.getVoidWorld(zoneOwner.getUniqueId().toString(), player.getWorld()).createWorld();
-
-        var zone = new WorldCreator("c_zones/" + zoneOwner.getUniqueId().toString() + world).createWorld();
-
-        var location = player.getLocation();
-
-        if (player.getWorld().equals(zone)) {
-            sender.sendMessage("You are already in that world!");
-            return;
-        }
-
-        location.setWorld(zone);
-        
-        player.teleport(location);
     }
 }

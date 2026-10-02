@@ -8,6 +8,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerPortalEvent;
 
+import dev.madtechs.creativeZone.commands.Helper;
 import dev.madtechs.creativeZone.voidWorld.VoidWorld;
 
 public class ZonePortal implements Listener {
@@ -28,13 +29,7 @@ public class ZonePortal implements Listener {
         World realDestination = to.getWorld();
 
         // Pull the uuid out of the zone name
-        String uuid = playerWorld.substring("c_zones/".length());
-
-        int suffixStart = uuid.indexOf("_");
-
-        if (suffixStart != -1) {
-            uuid = uuid.substring(0, suffixStart);
-        }
+        String uuid = Helper.getOwnerUUID(playerWorld);
 
         String zoneName = "c_zones/" + uuid + VoidWorld.getSuffix(realDestination);
 

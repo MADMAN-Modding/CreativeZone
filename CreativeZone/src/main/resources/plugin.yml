@@ -2,7 +2,7 @@ name: CreativeZone
 version: 1.0.0
 main: dev.madtechs.creativeZone.CreativeZone
 description: A plugin that allows players to make separate worlds that are in creative mode
-author: PaperMC
+author: MADMAN-Modding
 website: https://github.com/MADMAN-Modding/CreativeZones
 api-version: '26.3'
 
